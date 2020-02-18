@@ -1,0 +1,107 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &625089578558530277
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 625089578558530279}
+  - component: {fileID: 625089578558530278}
+  - component: {fileID: 3208575467714645742}
+  - component: {fileID: 4365188690582664974}
+  m_Layer: 0
+  m_Name: LdClient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &625089578558530279
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625089578558530277}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &625089578558530278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625089578558530277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4a3d384dd84eb54b9130cdd60422058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isInitializedOnAwake: 1
+  connectionTimeoutMS: 5000
+  mobileKey: 
+  userKey: 
+  isUserAnonymous: 0
+  automaticallyIdentifyWhenAttributesPending: 1
+  reloadAttributesOnSceneChange: 1
+--- !u!114 &3208575467714645742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625089578558530277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec6b5875577c0a34caa1584b4857d5af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  email:
+    isSet: 1
+    isPrivate: 0
+    value: arachnolover@8legs.net
+  fullName:
+    isSet: 1
+    isPrivate: 1
+    value: Pater Perker
+  firstName:
+    isSet: 0
+    isPrivate: 0
+    value: 
+  lastName:
+    isSet: 0
+    isPrivate: 0
+    value: 
+  country:
+    isSet: 0
+    isPrivate: 0
+    value: 
+  ipAddress:
+    isSet: 0
+    isPrivate: 0
+    value: 
+  avatar:
+    isSet: 0
+    isPrivate: 0
+    value: 
+--- !u!114 &4365188690582664974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625089578558530277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90781c6e61f60445a08c9087bba6694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logLevel: 4

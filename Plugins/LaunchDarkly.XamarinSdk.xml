@@ -1,0 +1,1442 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>LaunchDarkly.XamarinSdk</name>
+    </assembly>
+    <members>
+        <member name="T:LaunchDarkly.Xamarin.Configuration">
+            <summary>
+            Configuration options for <see cref="T:LaunchDarkly.Xamarin.LdClient"/>. 
+            </summary>
+            <remarks>
+            Instances of <see cref="T:LaunchDarkly.Xamarin.Configuration"/> are immutable once created. They can be created with the factory method
+            <see cref="M:LaunchDarkly.Xamarin.Configuration.Default(System.String)"/>, or using a builder pattern with <see cref="M:LaunchDarkly.Xamarin.Configuration.Builder(System.String)"/>
+            or <see cref="M:LaunchDarkly.Xamarin.Configuration.Builder(LaunchDarkly.Xamarin.Configuration)"/>.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.AllAttributesPrivate">
+            <summary>
+            Whether or not user attributes (other than the key) should be private (not sent to
+            the LaunchDarkly server).
+            </summary>
+            <remarks>
+            By default, this is <see langword="false"/>. If <see langword="true"/>, all of the user attributes
+            will be private, not just the attributes specified with <see cref="M:LaunchDarkly.Xamarin.IConfigurationBuilder.PrivateAttribute(System.String)"/>
+            or with the <see cref="M:LaunchDarkly.Client.IUserBuilderCanMakeAttributePrivate.AsPrivateAttribute"/> method.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.BackgroundPollingInterval">
+            <summary>
+            The interval between feature flag updates when the application is running in the background.
+            </summary>
+            <remarks>
+            This is only relevant on mobile platforms.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.BaseUri">
+            <summary>
+            The base URI of the LaunchDarkly server.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.ConnectionTimeout">
+            <summary>
+            The connection timeout to the LaunchDarkly server.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.EnableBackgroundUpdating">
+            <summary>
+            Whether to enable feature flag updates when the application is running in the background.
+            </summary>
+            <remarks>
+            This is only relevant on mobile platforms.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.EvaluationReasons">
+            <summary>
+            True if LaunchDarkly should provide additional information about how flag values were
+            calculated.
+            </summary>
+            <remarks>
+            The additional information will then be available through the client's "detail"
+            methods such as <see cref="M:LaunchDarkly.Xamarin.ILdClient.BoolVariationDetail(System.String,System.Boolean)"/>. Since this
+            increases the size of network requests, such information is not sent unless you set this option
+            to <see langword="true"/>.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.EventCapacity">
+            <summary>
+            The capacity of the event buffer.
+            </summary>
+            <remarks>
+            The client buffers up to this many events in memory before flushing. If the capacity is exceeded
+            before the buffer is flushed, events will be discarded. Increasing the capacity means that events
+            are less likely to be discarded, at the cost of consuming more memory.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.EventFlushInterval">
+            <summary>
+            The time between flushes of the event buffer.
+            </summary>
+            <remarks>
+            Decreasing the flush interval means that the event buffer is less likely to reach capacity.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.EventsUri">
+            <summary>
+            The base URL of the LaunchDarkly analytics event server.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.HttpMessageHandler">
+            <summary>
+            The object to be used for sending HTTP requests, if a specific implementation is desired.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.InlineUsersInEvents">
+            <summary>
+            Sets whether to include full user details in every analytics event.
+            </summary>
+            <remarks>
+            The default is <see langword="false"/>: events will only include the user key, except for one
+            "index" event that provides the full details for the user.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.IsStreamingEnabled">
+            <summary>
+            Whether or not the streaming API should be used to receive flag updates.
+            </summary>
+            <remarks>
+            This is true by default. Streaming should only be disabled on the advice of LaunchDarkly support.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.MobileKey">
+            <summary>
+            The key for your LaunchDarkly environment.
+            </summary>
+            <remarks>
+            This should be the "mobile key" field for the environment on your LaunchDarkly dashboard.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.Offline">
+            <summary>
+            Whether or not this client is offline. If <see langword="true"/>, no calls to LaunchDarkly will be made.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.PersistFlagValues">
+            <summary>
+            Whether the SDK should save flag values for each user in persistent storage, so they will be
+            immediately available the next time the SDK is started for the same user.
+            </summary>
+            <remarks>
+            The default is <see langword="true"/>.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.PollingInterval">
+            <summary>
+            The polling interval (when streaming is disabled).
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.PrivateAttributeNames">
+            <summary>
+            Attribute names that have been marked as private for all users.
+            </summary>
+            <remarks>
+            Any users sent to LaunchDarkly with this configuration active will have attributes with this name
+            removed, even if you did not use the <see cref="M:LaunchDarkly.Client.IUserBuilderCanMakeAttributePrivate.AsPrivateAttribute"/>
+            method when building the user.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.ReadTimeout">
+            <summary>
+            The timeout when reading data from the streaming connection.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.ReconnectTime">
+            <summary>
+            The reconnect base time for the streaming connection.
+            </summary>
+            <remarks>
+            The streaming connection uses an exponential backoff algorithm (with jitter) for reconnects, but
+            will start the backoff with a value near the value specified here. The default value is 1 second.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.StreamUri">
+            <summary>
+            The base URL of the LaunchDarkly streaming server.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.UseReport">
+            <summary>
+            Whether to use the HTTP REPORT method for feature flag requests.
+            </summary>
+            <remarks>
+            By default, polling and streaming connections are made with the GET method, witht the user data
+            encoded into the request URI. Using REPORT allows the user data to be sent in the request body instead.
+            However, some network gateways do not support REPORT.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.UserKeysCapacity">
+            <summary>
+            The number of user keys that the event processor can remember at any one time.
+            </summary>
+            <remarks>
+            The event processor keeps track of recently seen user keys so that duplicate user details will not
+            be sent in analytics events.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.Configuration.UserKeysFlushInterval">
+            <summary>
+            The interval at which the event processor will reset its set of known user keys.
+            </summary>
+        </member>
+        <member name="F:LaunchDarkly.Xamarin.Configuration.DefaultPollingInterval">
+            <summary>
+            Default value for <see cref="P:LaunchDarkly.Xamarin.Configuration.PollingInterval"/>.
+            </summary>
+        </member>
+        <member name="F:LaunchDarkly.Xamarin.Configuration.MinimumPollingInterval">
+            <summary>
+            Minimum value for <see cref="P:LaunchDarkly.Xamarin.Configuration.PollingInterval"/>.
+            </summary>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.Configuration.Default(System.String)">
+            <summary>
+            Creates a configuration with all parameters set to the default.
+            </summary>
+            <param name="mobileKey">the SDK key for your LaunchDarkly environment</param>
+            <returns>a <see cref="T:LaunchDarkly.Xamarin.Configuration"/> instance</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.Configuration.Builder(System.String)">
+            <summary>
+            Creates an <see cref="T:LaunchDarkly.Xamarin.IConfigurationBuilder"/> for constructing a configuration object using a fluent syntax.
+            </summary>
+            <remarks>
+            This is the only method for building a <see cref="T:LaunchDarkly.Xamarin.Configuration"/> if you are setting properties
+            besides the <c>MobileKey</c>. The <see cref="T:LaunchDarkly.Xamarin.IConfigurationBuilder"/> has methods for setting any number of
+            properties, after which you call <see cref="M:LaunchDarkly.Xamarin.IConfigurationBuilder.Build"/> to get the resulting
+            <c>Configuration</c> instance.
+            </remarks>
+            <example>
+            <code>
+                var config = Configuration.Builder("my-sdk-key")
+                    .EventFlushInterval(TimeSpan.FromSeconds(90))
+                    .StartWaitTime(TimeSpan.FromSeconds(5))
+                    .Build();
+            </code>
+            </example>
+            <param name="mobileKey">the mobile SDK key for your LaunchDarkly environment</param>
+            <returns>a builder object</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.Configuration.BuilderInternal(System.String)">
+            <summary>
+            Exposed for test code that needs to access the internal methods of <see cref="T:LaunchDarkly.Xamarin.ConfigurationBuilder"/> that
+            are not in <see cref="T:LaunchDarkly.Xamarin.IConfigurationBuilder"/>.
+            </summary>
+            <param name="mobileKey">the mobile SDK key</param>
+            <returns>a builder object</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.Configuration.Builder(LaunchDarkly.Xamarin.Configuration)">
+            <summary>
+            Creates an <see cref="T:LaunchDarkly.Xamarin.IConfigurationBuilder"/> starting with the properties of an existing <see cref="T:LaunchDarkly.Xamarin.Configuration"/>.
+            </summary>
+            <param name="fromConfiguration">the configuration to copy</param>
+            <returns>a builder object</returns>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.IConfigurationBuilder">
+            <summary>
+            A mutable object that uses the Builder pattern to specify properties for a <see cref="T:LaunchDarkly.Xamarin.Configuration"/> object.
+            </summary>
+            <remarks>
+            <para>
+            Obtain an instance of this class by calling <see cref="M:LaunchDarkly.Xamarin.Configuration.Builder(System.String)"/>.
+            </para>
+            <para>
+            All of the builder methods for setting a configuration property return a reference to the same builder, so they can be
+            chained together.
+            </para>
+            </remarks>
+            <example>
+            <code>
+                var config = Configuration.Builder("my-mobile-key").AllAttributesPrivate(true).EventCapacity(1000).Build();
+            </code>
+            </example>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.Build">
+            <summary>
+            Creates a <see cref="T:LaunchDarkly.Xamarin.Configuration"/> based on the properties that have been set on the builder.
+            Modifying the builder after this point does not affect the returned <see cref="T:LaunchDarkly.Xamarin.Configuration"/>.
+            </summary>
+            <returns>the configured <c>Configuration</c> object</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.AllAttributesPrivate(System.Boolean)">
+            <summary>
+            Sets whether or not user attributes (other than the key) should be private (not sent to
+            the LaunchDarkly server).
+            </summary>
+            <remarks>
+            By default, this is <see langword="false"/>. If <see langword="true"/>, all of the user attributes
+            will be private, not just the attributes specified with <see cref="M:LaunchDarkly.Xamarin.ConfigurationBuilder.PrivateAttribute(System.String)"/>
+            or with the <see cref="M:LaunchDarkly.Client.IUserBuilderCanMakeAttributePrivate.AsPrivateAttribute"/> method.
+            </remarks>
+            <param name="allAttributesPrivate">true if all attributes should be private</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.BackgroundPollingInterval(System.TimeSpan)">
+            <summary>
+            Sets the interval between feature flag updates when the application is running in the background.
+            </summary>
+            <remarks>
+            This is only relevant on mobile platforms. The default is <see cref="F:LaunchDarkly.Xamarin.Configuration.DefaultBackgroundPollingInterval"/>;
+            the minimum is <see cref="F:LaunchDarkly.Xamarin.Configuration.MinimumPollingInterval"/>.
+            </remarks>
+            <param name="backgroundPollingInterval">the background polling interval</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.BaseUri(System.Uri)">
+            <summary>
+            Sets the base URI of the LaunchDarkly server.
+            </summary>
+            <param name="baseUri">the base URI</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.ConnectionTimeout(System.TimeSpan)">
+            <summary>
+            Sets the connection timeout for all HTTP requests.
+            </summary>
+            <remarks>
+            The default value is 10 seconds.
+            </remarks>
+            <param name="connectionTimeout">the connection timeout</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.EnableBackgroundUpdating(System.Boolean)">
+            <summary>
+            Sets whether to enable feature flag polling when the application is in the background.
+            </summary>
+            <remarks>
+            By default, on Android and iOS the SDK can still receive feature flag updates when an application
+            is in the background, but it will use polling rather than maintaining a streaming connection (and
+            will use <see cref="M:LaunchDarkly.Xamarin.IConfigurationBuilder.BackgroundPollingInterval(System.TimeSpan)"/> rather than <see cref="M:LaunchDarkly.Xamarin.IConfigurationBuilder.PollingInterval(System.TimeSpan)"/>).
+            If you set this property to false, it will not check for feature flag updates until the
+            application returns to the foreground.
+            </remarks>
+            <param name="enableBackgroundUpdating"><see langword="true"/> if background updating should be allowed</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.EvaluationReasons(System.Boolean)">
+            <summary>
+            Set to <see langword="true"/> if LaunchDarkly should provide additional information about how flag values were
+            calculated.
+            </summary>
+            <remarks>
+            The additional information will then be available through the client's "detail"
+            methods such as <see cref="M:LaunchDarkly.Xamarin.ILdClient.BoolVariationDetail(System.String,System.Boolean)"/>. Since this
+            increases the size of network requests, such information is not sent unless you set this option
+            to <see langword="true"/>.
+            </remarks>
+            <param name="evaluationReasons"><see langword="true"/> if evaluation reasons are desired</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.EventCapacity(System.Int32)">
+            <summary>
+            Sets the capacity of the event buffer.
+            </summary>
+            <remarks>
+            The client buffers up to this many events in memory before flushing. If the capacity is exceeded
+            before the buffer is flushed, events will be discarded. Increasing the capacity means that events
+            are less likely to be discarded, at the cost of consuming more memory.
+            </remarks>
+            <param name="eventCapacity">the capacity of the event buffer</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.EventFlushInterval(System.TimeSpan)">
+            <summary>
+            Sets the time between flushes of the event buffer.
+            </summary>
+            <remarks>
+            Decreasing the flush interval means that the event buffer is less likely to reach capacity. The
+            default value is 5 seconds.
+            </remarks>
+            <param name="eventflushInterval">the flush interval</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.EventsUri(System.Uri)">
+            <summary>
+            Sets the base URL of the LaunchDarkly analytics event server.
+            </summary>
+            <param name="eventsUri">the events URI</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.HttpMessageHandler(System.Net.Http.HttpMessageHandler)">
+            <summary>
+            Sets the object to be used for sending HTTP requests, if a specific implementation is desired.
+            </summary>
+            <remarks>
+            This is exposed mainly for testing purposes; you should not normally need to change it. The default
+            value is an <see cref="T:System.Net.Http.HttpClientHandler"/>, but if you do not change this value,
+            on mobile platforms it will be replaced by the appropriate native HTTP handler for the current
+            current platform, if any (e.g. <c>Xamarin.Android.Net.AndroidClientHandler</c>). If you set it
+            explicitly to <see langword="null"/>, the SDK will call the default <see cref="T:System.Net.Http.HttpClient"/>
+            constructor without specifying a handler, which may or may not result in using a native HTTP handler
+            (depending on your application configuration).
+            </remarks>
+            <param name="httpMessageHandler">the <see cref="T:System.Net.Http.HttpMessageHandler"/> to use</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.InlineUsersInEvents(System.Boolean)">
+            <summary>
+            Sets whether to include full user details in every analytics event.
+            </summary>
+            <remarks>
+            The default is <see langword="false"/>: events will only include the user key, except for one
+            "index" event that provides the full details for the user.
+            </remarks>
+            <param name="inlineUsersInEvents">true or false</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.IsStreamingEnabled(System.Boolean)">
+            <summary>
+            Sets whether or not the streaming API should be used to receive flag updates.
+            </summary>
+            <remarks>
+            This is <see langword="true"/> by default. Streaming should only be disabled on the advice of LaunchDarkly support.
+            </remarks>
+            <param name="isStreamingEnabled">true if the streaming API should be used</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.MobileKey(System.String)">
+            <summary>
+            Sets the key for your LaunchDarkly environment.
+            </summary>
+            <remarks>
+            This should be the "mobile key" field for the environment on your LaunchDarkly dashboard.
+            </remarks>
+            <param name="mobileKey"></param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.Offline(System.Boolean)">
+            <summary>
+            Sets whether or not this client is offline. If <see langword="true"/>, no calls to LaunchDarkly will be made.
+            </summary>
+            <param name="offline"><see langword="true"/> if the client should remain offline</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.PersistFlagValues(System.Boolean)">
+            <summary>
+            Sets whether the SDK should save flag values for each user in persistent storage, so they will be
+            immediately available the next time the SDK is started for the same user.
+            </summary>
+            <remarks>
+            The default is <see langword="true"/>.
+            </remarks>
+            <param name="persistFlagValues"><see langword="true"/> to save flag values</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.PollingInterval(System.TimeSpan)">
+            <summary>
+            Sets the polling interval (when streaming is disabled).
+            </summary>
+            <remarks>
+            The default is <see cref="F:LaunchDarkly.Xamarin.Configuration.DefaultPollingInterval"/>; the minimum is
+            <see cref="F:LaunchDarkly.Xamarin.Configuration.MinimumPollingInterval"/>.
+            </remarks>
+            <param name="pollingInterval">the rule update polling interval</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.PrivateAttribute(System.String)">
+            <summary>
+            Marks an attribute name as private for all users.
+            </summary>
+            <remarks>
+            <para>
+            Any users sent to LaunchDarkly with this configuration active will have attributes with this name
+            removed, even if you did not use the <see cref="M:LaunchDarkly.Client.IUserBuilderCanMakeAttributePrivate.AsPrivateAttribute"/>
+            method in <see cref="T:LaunchDarkly.Client.UserBuilder"/>.
+            </para>
+            <para>
+            You may call this method repeatedly to mark multiple attributes as private.
+            </para>
+            </remarks>
+            <param name="privateAttributeName">the attribute name</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.ReadTimeout(System.TimeSpan)">
+            <summary>
+            Sets the timeout when reading data from the streaming connection.
+            </summary>
+            <remarks>
+            The default value is 5 minutes.
+            </remarks>
+            <param name="readTimeout">the read timeout</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.ReconnectTime(System.TimeSpan)">
+            <summary>
+            Sets the reconnect base time for the streaming connection.
+            </summary>
+            <remarks>
+            The streaming connection uses an exponential backoff algorithm (with jitter) for reconnects, but
+            will start the backoff with a value near the value specified here. The default value is 1 second.
+            </remarks>
+            <param name="reconnectTime">the reconnect time base value</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.StreamUri(System.Uri)">
+            <summary>
+            Sets the base URI of the LaunchDarkly streaming server.
+            </summary>
+            <param name="streamUri">the stream URI</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.UserKeysCapacity(System.Int32)">
+            <summary>
+            Sets the number of user keys that the event processor can remember at any one time.
+            </summary>
+            <remarks>
+            The event processor keeps track of recently seen user keys so that duplicate user details will not
+            be sent in analytics events.
+            </remarks>
+            <param name="userKeysCapacity">the user key cache capacity</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IConfigurationBuilder.UserKeysFlushInterval(System.TimeSpan)">
+            <summary>
+            Sets the interval at which the event processor will clear its cache of known user keys.
+            </summary>
+            <remarks>
+            The default value is five minutes.
+            </remarks>
+            <param name="userKeysFlushInterval">the flush interval</param>
+            <returns>the same builder</returns>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.ConnectionManager">
+             <summary>
+             Manages our connection to LaunchDarkly, if any, and encapsulates all of the state that
+             determines whether we should have a connection or not.
+             </summary>
+             <remarks>
+             Whenever the state of this object is modified by <see cref="M:LaunchDarkly.Xamarin.ConnectionManager.SetForceOffline(System.Boolean)"/>,
+             <see cref="M:LaunchDarkly.Xamarin.ConnectionManager.SetNetworkEnabled(System.Boolean)"/>, <see cref="M:LaunchDarkly.Xamarin.ConnectionManager.SetUpdateProcessorFactory(System.Func{LaunchDarkly.Xamarin.IMobileUpdateProcessor},System.Boolean)"/>,
+             or <see cref="M:LaunchDarkly.Xamarin.ConnectionManager.Start"/>, it will decide whether to make a new connection, drop an existing
+             connection, both, or neither. If the caller wants to know when a new connection (if any) is
+             ready, it should <c>await</c> the returned task.
+            
+             The object begins in a non-started state, so regardless of what properties are set, it will not
+             make a connection until after <see cref="M:LaunchDarkly.Xamarin.ConnectionManager.Start"/> has been called.
+             </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.ConnectionManager.ForceOffline">
+            <summary>
+            True if we are in offline mode (<see cref="M:LaunchDarkly.Xamarin.ConnectionManager.SetForceOffline(System.Boolean)"/> was set to true).
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.ConnectionManager.NetworkEnabled">
+            <summary>
+            True if we have been told there is network connectivity (<see cref="M:LaunchDarkly.Xamarin.ConnectionManager.SetNetworkEnabled(System.Boolean)"/>
+            was set to true).
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.ConnectionManager.Initialized">
+            <summary>
+            True if we made a successful LaunchDarkly connection or do not need to make one (see
+            <see cref="P:LaunchDarkly.Xamarin.ILdClient.Initialized"/>).
+            </summary>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ConnectionManager.SetForceOffline(System.Boolean)">
+             <summary>
+             Sets whether the client should always be offline, and attempts to connect if appropriate.
+             </summary>
+             <remarks>
+             Besides updating the value of the <see cref="P:LaunchDarkly.Xamarin.ConnectionManager.ForceOffline"/> property, we do the
+             following:
+             
+             If <c>forceOffline</c> is true, we drop our current connection (if any), and we will not
+             make any connections no matter what other properties are changed as long as this property is
+             still true.
+            
+             If <c>forceOffline</c> is false and we already have a connection, nothing happens.
+            
+             If <c>forceOffline</c> is false and we have no connection, but other conditions disallow
+             making a connection (or we do not have an update processor factory), nothing happens.
+            
+             If <c>forceOffline</c> is false, and we do not yet have a connection, and no other
+             conditions disallow making a connection, and we have an update processor factory,
+             we create an update processor and tell it to start.
+            
+             The returned task is immediately completed unless we are making a new connection, in which
+             case it is completed when the update processor signals success or failure. The task yields
+             a true result if we successfully made a connection <i>or</i> if we decided not to connect
+             because we are in offline mode. In other words, the result is true if
+             <see cref="P:LaunchDarkly.Xamarin.ConnectionManager.Initialized"/> is true.
+             </remarks>
+             <param name="forceOffline">true if the client should always be offline</param>
+             <returns>a task as described above</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ConnectionManager.SetNetworkEnabled(System.Boolean)">
+             <summary>
+             Sets whether we should be able to make network connections, and attempts to connect if appropriate.
+             </summary>
+             <remarks>
+             Besides updating the value of the <see cref="P:LaunchDarkly.Xamarin.ConnectionManager.NetworkEnabled"/> property, we do the
+             following:
+             
+             If <c>networkEnabled</c> is false, we drop our current connection (if any), and we will not
+             make any connections no matter what other properties are changed as long as this property is
+             still true.
+            
+             If <c>networkEnabled</c> is true and we already have a connection, nothing happens.
+            
+             If <c>networkEnabled</c> is true and we have no connection, but other conditions disallow
+             making a connection (or we do not have an update processor factory), nothing happens.
+            
+             If <c>networkEnabled</c> is true, and we do not yet have a connection, and no other
+             conditions disallow making a connection, and we have an update processor factory,
+             we create an update processor and tell it to start.
+            
+             The returned task is immediately completed unless we are making a new connection, in which
+             case it is completed when the update processor signals success or failure. The task yields
+             a true result if we successfully made a connection <i>or</i> if we decided not to connect
+             because we are in offline mode. In other words, the result is true if
+             <see cref="P:LaunchDarkly.Xamarin.ConnectionManager.Initialized"/> is true.
+             </remarks>
+             <param name="networkEnabled">true if we think we can make network connections</param>
+             <returns>a task as described above</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ConnectionManager.SetUpdateProcessorFactory(System.Func{LaunchDarkly.Xamarin.IMobileUpdateProcessor},System.Boolean)">
+             <summary>
+             Sets the factory function for creating an update processor, and attempts to connect if
+             appropriate.
+             </summary>
+             <remarks>
+             The factory function encapsulates all the information that <see cref="T:LaunchDarkly.Xamarin.LdClient"/> takes into
+             account when making a connection, i.e. whether we are in streaming or polling mode, the
+             polling interval, and the curent user. <c>ConnectionManager</c> itself has no knowledge of
+             those things.
+             
+             Besides updating the private factory function field, we do the following:
+             
+             If the function is null, we drop our current connection (if any), and we will not make
+             any connections no matter what other properties are changed as long as it is still null.
+            
+             If it is non-null and we already have the same factory function, nothing happens.
+            
+             If it is non-null and we do not already have the same factory function, but other conditions
+             disallow making a connection, nothing happens.
+            
+             If it is non-null and we do not already have the same factory function, and no other
+             conditions disallow making a connection, we create an update processor and tell it to start.
+             In this case, we also reset <see cref="P:LaunchDarkly.Xamarin.ConnectionManager.Initialized"/> to false if <c>resetInitialized</c> is
+             true.
+            
+             The returned task is immediately completed unless we are making a new connection, in which
+             case it is completed when the update processor signals success or failure. The task yields
+             a true result if we successfully made a connection <i>or</i> if we decided not to connect
+             because we are in offline mode. In other words, the result is true if
+             <see cref="P:LaunchDarkly.Xamarin.ConnectionManager.Initialized"/> is true.
+             </remarks>
+             <param name="updateProcessorFactory">a factory function or null</param>
+             <param name="resetInitialized">true if we should reset the initialized state (e.g. if we
+             are switching users</param>
+             <returns>a task as described above</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ConnectionManager.Start">
+            <summary>
+            Tells the <c>ConnectionManager</c> that it can go ahead and connect if appropriate.
+            </summary>
+            <returns>a task which will yield true if this method results in a successful connection, or
+            if we are in offline mode and don't need to make a connection</returns>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.FeatureFlagEvent">
+            <summary>
+            The IFlagEventProperties abstraction is used by LaunchDarkly.Common to communicate properties
+            that affect event generation. We can't just have FeatureFlag itself implement that interface,
+            because it doesn't actually contain its own flag key.
+            </summary>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.FlagChangedEventArgs">
+            <summary>
+            An event object that is sent to handlers for the <see cref="E:LaunchDarkly.Xamarin.ILdClient.FlagChanged"/> event.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.FlagChangedEventArgs.Key">
+            <summary>
+            The unique key of the feature flag whose value has changed.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.FlagChangedEventArgs.NewValue">
+            <summary>
+            The updated value of the flag for the current user.
+            </summary>
+            <remarks>
+            <para>
+            Since flag values can be of any JSON type, this property is an <see cref="T:LaunchDarkly.Client.LdValue"/>. You
+            can use properties and methods of <see cref="T:LaunchDarkly.Client.LdValue"/> such as <see cref="P:LaunchDarkly.Client.LdValue.AsBool"/>
+            to convert it to other types.
+            </para>
+            <para>
+            Flag evaluations always produce non-null values, but this property could still be <see cref="P:LaunchDarkly.Client.LdValue.Null"/>
+             if the flag was completely deleted or if it could not be evaluated due to an error of some kind.
+            </para>
+            <para>
+            Note that in those cases, the Variation methods may return a different result from this property,
+            because of their "default value" behavior. For instance, if the flag "feature1" has been deleted, the
+            following expression will return the string "xyz", because that is the default value that you specified
+            in the method call:
+            </para>
+            <code>
+                client.StringVariation("feature1", "xyz");
+            </code>
+            <para>
+            But when an event is sent for the deletion of the flag, it has no way to know that you would have
+            specified "xyz" as a default value when evaluating the flag, so <see cref="P:LaunchDarkly.Xamarin.FlagChangedEventArgs.NewValue"/> will simply
+            contain a <see langword="null"/>.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.FlagChangedEventArgs.OldValue">
+            <summary>
+            The last known value of the flag for the current user prior to the update.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.FlagChangedEventArgs.FlagWasDeleted">
+            <summary>
+            True if the flag was completely removed from the environment.
+            </summary>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.ILdClient">
+            <summary>
+            Interface for the standard SDK client methods and properties. The only implementation of this is <see cref="T:LaunchDarkly.Xamarin.LdClient"/>.
+            </summary>
+            <remarks>
+            See also <see cref="T:LaunchDarkly.Xamarin.ILdClientExtensions"/>, which provides convenience methods that build upon
+            this interface.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.ILdClient.Initialized">
+            <summary>
+            Returns a boolean value indicating LaunchDarkly connection and flag state within the client.
+            </summary>
+            <remarks>
+            <para>
+            When you first start the client, once <see cref="M:LaunchDarkly.Xamarin.LdClient.Init(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User,System.TimeSpan)"/> or
+            <see cref="M:LaunchDarkly.Xamarin.LdClient.InitAsync(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User)"/> has returned, <see cref="P:LaunchDarkly.Xamarin.ILdClient.Initialized"/> should be
+            <see langword="true"/> if and only if either 1. it connected to LaunchDarkly and successfully retrieved
+            flags, or 2. it started in offline mode so there's no need to connect to LaunchDarkly. If the client
+            timed out trying to connect to LD, then <see cref="P:LaunchDarkly.Xamarin.ILdClient.Initialized"/> is <see langword="false"/> (even if we
+            do have cached flags).  If the client connected and got a 401 error, <see cref="P:LaunchDarkly.Xamarin.ILdClient.Initialized"/> is
+            <see langword="false"/>. This serves the purpose of letting the app know that there was a problem of some kind.
+            </para>
+            <para>
+            If you call <see cref="M:LaunchDarkly.Xamarin.ILdClient.Identify(LaunchDarkly.Client.User,System.TimeSpan)"/> or <see cref="M:LaunchDarkly.Xamarin.ILdClient.IdentifyAsync(LaunchDarkly.Client.User)"/>, <see cref="P:LaunchDarkly.Xamarin.ILdClient.Initialized"/>
+            will become <see langword="false"/> until the SDK receives the new user's flags.
+            </para>
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.ILdClient.Offline">
+            <summary>
+            Indicates whether the SDK is configured to be always offline.
+            </summary>
+            <remarks>
+            <para>
+            This is initially <see langword="true"/> if you set it to <see langword="true"/> in the configuration with
+            <see cref="M:LaunchDarkly.Xamarin.IConfigurationBuilder.Offline(System.Boolean)"/>. However, you can change it at any time to allow the client
+            to go online, or force it to go offline, using <see cref="M:LaunchDarkly.Xamarin.ILdClient.SetOffline(System.Boolean,System.TimeSpan)"/> or
+            <see cref="M:LaunchDarkly.Xamarin.ILdClient.SetOfflineAsync(System.Boolean)"/>.
+            </para>
+            <para>
+            When <see cref="P:LaunchDarkly.Xamarin.ILdClient.Offline"/> is <see langword="false"/>, the SDK connects to LaunchDarkly if possible, but
+            this does not guarantee that the connection is successful. There is currently no mechanism to detect whether
+            the SDK is currently connected to LaunchDarkly.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.SetOffline(System.Boolean,System.TimeSpan)">
+            <summary>
+            Sets whether the SDK should be always offline.
+            </summary>
+            <remarks>
+            <para>
+            This is equivalent to <see cref="M:LaunchDarkly.Xamarin.ILdClient.SetOfflineAsync(System.Boolean)"/>, but as a synchronous method.
+            </para>
+            <para>
+            If you set the property to <see langword="true"/>, any existing connection will be dropped, and the
+            method immediately returns <see langword="false"/>.
+            </para>
+            <para>
+            If you set it to <see langword="false"/> when it was previously <see langword="true"/>, but no connection can
+            be made because the network is not available, the method immediately returns <see langword="false"/>, but the
+            SDK will attempt to connect later if the network becomes available.
+            </para>
+            <para>
+            If you set it to <see langword="false"/> when it was previously <see langword="true"/>, and the network is
+            available, the SDK will attempt to connect to LaunchDarkly. If the connection succeeds within the interval
+            <c>maxWaitTime</c>, the method returns <see langword="true"/>. If the connection permanently fails (e.g. if
+            the mobile key is invalid), the method returns <see langword="false"/>. If the connection attempt is still in
+            progress after <c>maxWaitTime</c> elapses, the method returns <see langword="false"/>, but the connection
+            might succeed later.
+            </para>
+            </remarks>
+            <param name="value">true if the client should be always offline</param>
+            <param name="maxWaitTime">the maximum length of time to wait for a connection</param>
+            <returns>true if a new connection was successfully made</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.SetOfflineAsync(System.Boolean)">
+            <summary>
+            Sets whether the SDK should be always offline.
+            </summary>
+            <remarks>
+            <para>
+            This is equivalent to <see cref="M:LaunchDarkly.Xamarin.ILdClient.SetOffline(System.Boolean,System.TimeSpan)"/>, but as an asynchronous method.
+            </para>
+            <para>
+            If you set the property to <see langword="true"/>, any existing connection will be dropped, and the
+            task immediately yields <see langword="false"/>.
+            </para>
+            <para>
+            If you set it to <see langword="false"/> when it was previously <see langword="true"/>, but no connection can
+            be made because the network is not available, the task immediately yields <see langword="false"/>, but the
+            SDK will attempt to connect later if the network becomes available.
+            </para>
+            <para>
+            If you set it to <see langword="false"/> when it was previously <see langword="true"/>, and the network is
+            available, the SDK will attempt to connect to LaunchDarkly. If and when the connection succeeds, the task
+            yields <see langword="true"/>. If and when the connection permanently fails (e.g. if the mobile key is
+            invalid), the task yields <see langword="false"/>.
+            </para>
+            </remarks>
+            <param name="value">true if the client should be always offline</param>
+            <returns>a task that yields true if a new connection was successfully made</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.BoolVariation(System.String,System.Boolean)">
+            <summary>
+            Returns the boolean value of a feature flag for a given flag key.
+            </summary>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>the variation for the selected user, or <c>defaultValue</c> if the flag is
+            disabled in the LaunchDarkly control panel</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.BoolVariationDetail(System.String,System.Boolean)">
+            <summary>
+            Returns the boolean value of a feature flag for a given flag key, in an object that also
+            describes the way the value was determined.
+            </summary>
+            <remarks>
+            The <see cref="P:LaunchDarkly.Client.EvaluationDetail`1.Reason"/> property in the result will also be included in analytics
+            events, if you are capturing detailed event data for this flag.
+            </remarks>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>an <c>EvaluationDetail</c> object</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.StringVariation(System.String,System.String)">
+            <summary>
+            Returns the string value of a feature flag for a given flag key.
+            </summary>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>the variation for the selected user, or <c>defaultValue</c> if the flag is
+            disabled in the LaunchDarkly control panel</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.StringVariationDetail(System.String,System.String)">
+            <summary>
+            Returns the string value of a feature flag for a given flag key, in an object that also
+            describes the way the value was determined.
+            </summary>
+            <remarks>
+            The <see cref="P:LaunchDarkly.Client.EvaluationDetail`1.Reason"/> property in the result will also be included in analytics
+            events, if you are capturing detailed event data for this flag.
+            </remarks>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>an <c>EvaluationDetail</c> object</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.FloatVariation(System.String,System.Single)">
+            <summary>
+            Returns the float value of a feature flag for a given flag key.
+            </summary>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>the variation for the selected user, or <c>defaultValue</c> if the flag is
+            disabled in the LaunchDarkly control panel</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.FloatVariationDetail(System.String,System.Single)">
+            <summary>
+            Returns the float value of a feature flag for a given flag key, in an object that also
+            describes the way the value was determined.
+            </summary>
+            <remarks>
+            The <see cref="P:LaunchDarkly.Client.EvaluationDetail`1.Reason"/> property in the result will also be included in analytics
+            events, if you are capturing detailed event data for this flag.
+            </remarks>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>an <c>EvaluationDetail</c> object</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.IntVariation(System.String,System.Int32)">
+            <summary>
+            Returns the integer value of a feature flag for a given flag key.
+            </summary>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>the variation for the selected user, or <c>defaultValue</c> if the flag is
+            disabled in the LaunchDarkly control panel</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.IntVariationDetail(System.String,System.Int32)">
+            <summary>
+            Returns the integer value of a feature flag for a given flag key, in an object that also
+            describes the way the value was determined.
+            </summary>
+            <remarks>
+            The <see cref="P:LaunchDarkly.Client.EvaluationDetail`1.Reason"/> property in the result will also be included in analytics
+            events, if you are capturing detailed event data for this flag.
+            </remarks>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>an <c>EvaluationDetail</c> object</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.JsonVariation(System.String,LaunchDarkly.Client.LdValue)">
+            <summary>
+            Returns the JSON value of a feature flag for a given flag key.
+            </summary>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>the variation for the selected user, or <c>defaultValue</c> if the flag is
+            disabled in the LaunchDarkly control panel</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.JsonVariationDetail(System.String,LaunchDarkly.Client.LdValue)">
+            <summary>
+            Returns the JSON value of a feature flag for a given flag key, in an object that also
+            describes the way the value was determined.
+            </summary>
+            <remarks>
+            The <see cref="P:LaunchDarkly.Client.EvaluationDetail`1.Reason"/> property in the result will also be included in analytics
+            events, if you are capturing detailed event data for this flag.
+            </remarks>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag</param>
+            <returns>an <c>EvaluationDetail</c> object</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.Track(System.String)">
+            <summary>
+            Tracks that current user performed an event for the given event name.
+            </summary>
+            <param name="eventName">the name of the event</param>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.Track(System.String,LaunchDarkly.Client.LdValue)">
+            <summary>
+            Tracks that the current user performed an event for the given event name, with additional JSON data.
+            </summary>
+            <param name="eventName">the name of the event</param>
+            <param name="data">a JSON value containing additional data associated with the event</param>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.Track(System.String,LaunchDarkly.Client.LdValue,System.Double)">
+            <summary>
+            Tracks that the current user performed an event for the given event name, and associates it with a
+            numeric metric value.
+            </summary>
+            <remarks>
+            As of this version’s release date, the LaunchDarkly service does not support the <c>metricValue</c>
+            parameter. As a result, calling this overload of <c>Track</c> will not yet produce any different
+            behavior from calling <see cref="M:LaunchDarkly.Xamarin.ILdClient.Track(System.String,LaunchDarkly.Client.LdValue)"/> without a <c>metricValue</c>.
+            Refer to the <a href="https://docs.launchdarkly.com/docs/xamarin-sdk-reference#section-track">SDK reference guide</a>
+            for the latest status.
+            </remarks>
+            <param name="eventName">the name of the event</param>
+            <param name="data">a JSON value containing additional data associated with the event; pass
+            <see cref="P:LaunchDarkly.Client.LdValue.Null"/> if you do not need this value</param>
+            <param name="metricValue">this value is used by the LaunchDarkly experimentation feature in
+            numeric custom metrics, and will also be returned as part of the custom event for Data Export</param>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.AllFlags">
+            <summary>
+            Returns a map from feature flag keys to <see cref="T:LaunchDarkly.Client.LdValue"/> feature flag values for the current user.
+            </summary>
+            <remarks>
+            <para>
+            If the result of a flag's value would have returned the default variation, the value in the map will contain
+            <see cref="P:LaunchDarkly.Client.LdValue.Null"/>. If the client is offline or has not been initialized, an empty
+            map will be returned.
+            </para>
+            <para>
+            This method will not send analytics events back to LaunchDarkly.
+            </para>
+            </remarks>
+            <returns>a map from feature flag keys to values for the current user</returns>
+        </member>
+        <member name="E:LaunchDarkly.Xamarin.ILdClient.FlagChanged">
+            <summary>
+            This event is triggered when the client has received an updated value for a feature flag.
+            </summary>
+            <remarks>
+            <para>
+            This could mean that the flag configuration was changed in LaunchDarkly, or that you have changed the current
+            user and the flag values are different for this user than for the previous user. The event is only triggered
+            if the newly received flag value is actually different from the previous one.
+            </para>
+            <para>
+            The <see cref="T:LaunchDarkly.Xamarin.FlagChangedEventArgs"/> properties will indicate the key of the feature flag, the new value,
+            and the previous value.
+            </para>
+            <para>
+            On platforms that have a main UI thread (such as iOS and Android), handlers for this event are guaranteed to
+            be called on that thread; on other platforms, the SDK uses a thread pool. Either way, the handler is called
+            called asynchronously after whichever SDK action triggered the flag change has already completed. This is to
+            avoid deadlocks, in case the action was also on the main thread, or on a thread that was holding a lock on
+            some application resource that the handler also uses.
+            </para>
+            </remarks>
+            <example>
+            <code>
+                client.FlagChanged += (sender, eventArgs) => {
+                    if (eventArgs.Key == "key-for-flag-i-am-watching") {
+                        DoSomethingWithNewFlagValue(eventArgs.NewBoolValue);
+                    }
+                };
+            </code>
+            </example>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.Identify(LaunchDarkly.Client.User,System.TimeSpan)">
+            <summary>
+            Changes the current user, requests flags for that user from LaunchDarkly if we are online, and generates
+            an analytics event to tell LaunchDarkly about the user.
+            </summary>
+            <remarks>
+            <para>
+            This is equivalent to <see cref="M:LaunchDarkly.Xamarin.ILdClient.IdentifyAsync(LaunchDarkly.Client.User)"/>, but as a synchronous method.
+            </para>
+            <para>
+            If the SDK is online, <see cref="M:LaunchDarkly.Xamarin.ILdClient.Identify(LaunchDarkly.Client.User,System.TimeSpan)"/> waits to receive feature flag values for the new user from
+            LaunchDarkly. If it receives the new flag values before <c>maxWaitTime</c> has elapsed, it returns
+            <see langword="true"/>. If the timeout elapses, it returns <see langword="false"/> (although the SDK might
+            still receive the flag values later). If we do not need to request flags from LaunchDarkly because we are
+            in offline mode, it returns <see langword="true"/>.
+            </para>
+            <para>
+            If you do not want to wait, you can either set <c>maxWaitTime</c> to zero or call <see cref="M:LaunchDarkly.Xamarin.ILdClient.IdentifyAsync(LaunchDarkly.Client.User)"/>.
+            </para>
+            </remarks>
+            <param name="user">the new user</param>
+            <param name="maxWaitTime">the maximum time to wait for the new flag values</param>
+            <returns>true if new flag values were obtained</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.IdentifyAsync(LaunchDarkly.Client.User)">
+            <summary>
+            Changes the current user, requests flags for that user from LaunchDarkly if we are online, and generates
+            an analytics event to tell LaunchDarkly about the user.
+            </summary>
+            <remarks>
+            <para>
+            This is equivalent to <see cref="M:LaunchDarkly.Xamarin.ILdClient.Identify(LaunchDarkly.Client.User,System.TimeSpan)"/>, but as an asynchronous method.
+            </para>
+            <para>
+            If the SDK is online, the returned task is completed once the SDK has received feature flag values for the
+            new user from LaunchDarkly, or received an unrecoverable error; it yields <see langword="true"/> for success
+            or <see langword="false"/> for an error. If the SDK is offline, the returned task is completed immediately
+            and yields <see langword="true"/>.
+            </para>
+            </remarks>
+            <param name="user">the new user</param>
+            <returns>a task that yields true if new flag values were obtained</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClient.Flush">
+            <summary>
+            Tells the client that all pending analytics events should be delivered as soon as possible.
+            </summary>
+            <remarks>
+            <para>
+            When the LaunchDarkly client generates analytics events (from flag evaluations, or from
+            <see cref="M:LaunchDarkly.Xamarin.ILdClient.Identify(LaunchDarkly.Client.User,System.TimeSpan)"/> or <see cref="M:LaunchDarkly.Xamarin.ILdClient.Track(System.String)"/>), they are queued on a worker thread.
+            The event thread normally sends all queued events to LaunchDarkly at regular intervals, controlled by the
+            <see cref="M:LaunchDarkly.Xamarin.IConfigurationBuilder.EventFlushInterval(System.TimeSpan)"/> option. Calling <see cref="M:LaunchDarkly.Xamarin.ILdClient.Flush"/> triggers a send
+            without waiting for the next interval.
+            </para>
+            <para>
+            Flushing is asynchronous, so this method will return before it is complete. However, if you
+            shut down the client with <see cref="M:System.IDisposable.Dispose"/>, events are guaranteed to be
+            sent before that method returns.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.ILdClientExtensions">
+            <summary>
+            Convenience methods that extend the <see cref="T:LaunchDarkly.Xamarin.ILdClient"/> interface.
+            </summary>
+            <remarks>
+            These are implemented outside of <see cref="T:LaunchDarkly.Xamarin.ILdClient"/> and <see cref="T:LaunchDarkly.Xamarin.LdClient"/> because they do not
+            rely on any implementation details of <see cref="T:LaunchDarkly.Xamarin.LdClient"/>; they are decorators that would work equally
+            well with a stub or test implementation of the interface.
+            </remarks>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClientExtensions.EnumVariation``1(LaunchDarkly.Xamarin.ILdClient,System.String,``0)">
+            <summary>
+            Equivalent to <see cref="M:LaunchDarkly.Xamarin.ILdClient.StringVariation(System.String,System.String)"/>, but converts the
+            flag's string value to an enum value.
+            </summary>
+            <remarks>
+            <para>
+            If the flag has a value that is not one of the allowed enum value names, or is not a string,
+            <c>defaultValue</c> is returned.
+            </para>
+            <para>
+            Note that there is no type constraint to guarantee that T really is an enum type, because that is
+            a C# 7.3 feature that is unavailable in older versions of .NET Standard. If you try to use a
+            non-enum type, you will simply receive the default value back.
+            </para>
+            </remarks>
+            <typeparam name="T">the enum type</typeparam>
+            <param name="client">the client instance</param>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag (as an enum value)</param>
+            <returns>the variation for the given user, or <c>defaultValue</c> if the flag cannot
+            be evaluated or does not have a valid enum value</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.ILdClientExtensions.EnumVariationDetail``1(LaunchDarkly.Xamarin.ILdClient,System.String,``0)">
+            <summary>
+            Equivalent to <see cref="M:LaunchDarkly.Xamarin.ILdClient.StringVariationDetail(System.String,System.String)"/>, but converts the
+            flag's string value to an enum value.
+            </summary>
+            <remarks>
+            <para>
+            If the flag has a value that is not one of the allowed enum value names, or is not a string,
+            <c>defaultValue</c> is returned.
+            </para>
+            <para>
+            Note that there is no type constraint to guarantee that T really is an enum type, because that is
+            a C# 7.3 feature that is unavailable in older versions of .NET Standard. If you try to use a
+            non-enum type, you will simply receive the default value back.
+            </para>
+            </remarks>
+            <typeparam name="T">the enum type</typeparam>
+            <param name="client">the client instance</param>
+            <param name="key">the unique feature key for the feature flag</param>
+            <param name="defaultValue">the default value of the flag (as an enum value)</param>
+            <returns>an <see cref="T:LaunchDarkly.Client.EvaluationDetail`1"/> object</returns>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.IMobileUpdateProcessor">
+            <summary>
+            Interface for an object that receives updates to feature flags, user segments, and anything
+            else that might come from LaunchDarkly.
+            </summary>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IMobileUpdateProcessor.Start">
+            <summary>
+            Initializes the processor. This is called once from the <see cref="T:LaunchDarkly.Xamarin.LdClient"/> constructor.
+            </summary>
+            <returns>a <c>Task</c> which is completed once the processor has finished starting up</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.IMobileUpdateProcessor.Initialized">
+            <summary>
+            Checks whether the processor has finished initializing.
+            </summary>
+            <returns>true if fully initialized</returns>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.NullUpdateProcessor">
+            <summary>
+            Used when the client is offline or in LDD mode.
+            </summary>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.LdClient">
+            <summary>
+            A client for the LaunchDarkly API. Client instances are thread-safe. Your application should instantiate
+            a single <c>LdClient</c> for the lifetime of their application.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.LdClient.Instance">
+            <summary>
+            The singleton instance used by your application throughout its lifetime. Once this exists, you cannot
+            create a new client instance unless you first call <see cref="M:LaunchDarkly.Xamarin.LdClient.Dispose"/> on this one.
+            </summary>
+            <remarks>
+            Use the static factory methods <see cref="M:LaunchDarkly.Xamarin.LdClient.Init(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User,System.TimeSpan)"/> or
+            <see cref="M:LaunchDarkly.Xamarin.LdClient.InitAsync(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User)"/> to set this <see cref="T:LaunchDarkly.Xamarin.LdClient"/> instance.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.LdClient.Version">
+            <summary>
+            The current version string of the SDK.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.LdClient.Config">
+            <summary>
+            The <see cref="T:LaunchDarkly.Xamarin.Configuration"/> instance used to set up the LdClient.
+            </summary>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.LdClient.User">
+            <summary>
+            The current user for all SDK operations.
+            </summary>
+            <remarks>
+            This is initially the user specified for <see cref="M:LaunchDarkly.Xamarin.LdClient.Init(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User,System.TimeSpan)"/> or
+            <see cref="M:LaunchDarkly.Xamarin.LdClient.InitAsync(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User)"/>, but can be changed later with <see cref="M:LaunchDarkly.Xamarin.LdClient.Identify(LaunchDarkly.Client.User,System.TimeSpan)"/>
+            or <see cref="M:LaunchDarkly.Xamarin.LdClient.IdentifyAsync(LaunchDarkly.Client.User)"/>.
+            </remarks>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.LdClient.Offline">
+            <inheritdoc/>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.LdClient.Initialized">
+            <inheritdoc/>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.LdClient.PlatformType">
+            <summary>
+            Indicates which platform the SDK is built for.
+            </summary>
+            <remarks>
+            <para>
+            This property is mainly useful for debugging. It does not indicate which platform you are actually running on,
+            but rather which variant of the SDK is currently in use.
+            </para>
+            <para>
+            The <c>LaunchDarkly.XamarinSdk</c> package contains assemblies for multiple target platforms. In an Android
+            or iOS application, you will normally be using the Android or iOS variant of the SDK; that is done
+            automatically when you install the NuGet package. On all other platforms, you will get the .NET Standard
+            variant.
+            </para>
+            <para>
+            The basic features of the SDK are the same in all of these variants; the difference is in platform-specific
+            behavior such as detecting when an application has gone into the background, detecting network connectivity,
+            and ensuring that code is executed on the UI thread if applicable for that platform. Therefore, if you find
+            that these platform-specific behaviors are not working correctly, you may want to check this property to
+            make sure you are not for some reason running the .NET Standard SDK on a phone.
+            </para>
+            </remarks>
+        </member>
+        <member name="E:LaunchDarkly.Xamarin.LdClient.FlagChanged">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.Init(System.String,LaunchDarkly.Client.User,System.TimeSpan)">
+            <summary>
+            Creates a new <see cref="T:LaunchDarkly.Xamarin.LdClient"/> singleton instance and attempts to initialize feature flags.
+            </summary>
+            <remarks>
+            <para>
+            In offline mode, this constructor will return immediately. Otherwise, it will wait and block on
+            the current thread until initialization and the first response from the LaunchDarkly service is
+            returned, up to the specified timeout. If the timeout elapses, the returned instance will have
+            an <see cref="P:LaunchDarkly.Xamarin.LdClient.Initialized"/> property of <see langword="false"/>.
+            </para>
+            <para>
+            If you would rather this happen asynchronously, use <see cref="M:LaunchDarkly.Xamarin.LdClient.InitAsync(System.String,LaunchDarkly.Client.User)"/>. To
+            specify additional configuration options rather than just the mobile key, use
+            <see cref="M:LaunchDarkly.Xamarin.LdClient.Init(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User,System.TimeSpan)"/> or <see cref="M:LaunchDarkly.Xamarin.LdClient.InitAsync(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User)"/>.
+            </para>
+            <para>
+            You must use one of these static factory methods to instantiate the single instance of LdClient
+            for the lifetime of your application.
+            </para>
+            </remarks>
+            <returns>the singleton <see cref="T:LaunchDarkly.Xamarin.LdClient"/> instance</returns>
+            <param name="mobileKey">the mobile key given to you by LaunchDarkly</param>
+            <param name="user">the user needed for client operations (must not be <see langword="null"/>);
+            if the user's <see cref="P:LaunchDarkly.Client.User.Key"/> is <see langword="null"/> and <see cref="P:LaunchDarkly.Client.User.Anonymous"/>
+            is <see langword="true"/>, it will be assigned a key that uniquely identifies this device</param>
+            <param name="maxWaitTime">the maximum length of time to wait for the client to initialize</param>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.InitAsync(System.String,LaunchDarkly.Client.User)">
+            <summary>
+            Creates a new <see cref="T:LaunchDarkly.Xamarin.LdClient"/> singleton instance and attempts to initialize feature flags asynchronously.
+            </summary>
+            <remarks>
+            <para>
+            The returned task will yield the <see cref="T:LaunchDarkly.Xamarin.LdClient"/> instance once the first response from
+            the LaunchDarkly service is returned (or immediately if it is in offline mode).
+            </para>
+            <para>
+            You must use one of these static factory methods to instantiate the single instance of LdClient
+            for the lifetime of your application.
+            </para>
+            </remarks>
+            <returns>the singleton <see cref="T:LaunchDarkly.Xamarin.LdClient"/> instance</returns>
+            <param name="mobileKey">the mobile key given to you by LaunchDarkly</param>
+            <param name="user">the user needed for client operations (must not be <see langword="null"/>);
+            if the user's <see cref="P:LaunchDarkly.Client.User.Key"/> is <see langword="null"/> and <see cref="P:LaunchDarkly.Client.User.Anonymous"/>
+            is <see langword="true"/>, it will be assigned a key that uniquely identifies this device</param>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.Init(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User,System.TimeSpan)">
+            <summary>
+            Creates and returns a new LdClient singleton instance, then starts the workflow for 
+            fetching Feature Flags.
+            </summary>
+            <remarks>
+            <para>
+            In offline mode, this constructor will return immediately. Otherwise, it will wait and block on
+            the current thread until initialization and the first response from the LaunchDarkly service is
+            returned, up to the specified timeout. If the timeout elapses, the returned instance will have
+            an <see cref="P:LaunchDarkly.Xamarin.LdClient.Initialized"/> property of <see langword="false"/>.
+            </para>
+            <para>
+            If you would rather this happen asynchronously, use <see cref="M:LaunchDarkly.Xamarin.LdClient.InitAsync(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User)"/>.
+            If you do not need to specify configuration options other than the mobile key, you can use
+            <see cref="M:LaunchDarkly.Xamarin.LdClient.Init(System.String,LaunchDarkly.Client.User,System.TimeSpan)"/> or <see cref="M:LaunchDarkly.Xamarin.LdClient.InitAsync(System.String,LaunchDarkly.Client.User)"/>.
+            </para>
+            <para>
+            You must use one of these static factory methods to instantiate the single instance of LdClient
+            for the lifetime of your application.
+            </para>
+            </remarks>
+            <returns>The singleton LdClient instance.</returns>
+            <param name="config">The client configuration object</param>
+            <param name="user">The user needed for client operations. Must not be null.
+            If the user's Key is null, it will be assigned a key that uniquely identifies this device.</param>
+            <param name="maxWaitTime">The maximum length of time to wait for the client to initialize.
+            If this time elapses, the method will not throw an exception but will return the client in
+            an uninitialized state.</param>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.InitAsync(LaunchDarkly.Xamarin.Configuration,LaunchDarkly.Client.User)">
+            <summary>
+            Creates and returns a new LdClient singleton instance, then starts the workflow for 
+            fetching Feature Flags. This constructor should be used if you do not want to wait 
+            for the IUpdateProcessor instance to finish initializing and receive the first response
+            from the LaunchDarkly service.
+            
+            This is the creation point for LdClient, you must use this static method or the more basic
+            <see cref="M:LaunchDarkly.Xamarin.LdClient.InitAsync(System.String,LaunchDarkly.Client.User)"/> to instantiate the single instance of LdClient
+            for the lifetime of your application.
+            </summary>
+            <returns>The singleton LdClient instance.</returns>
+            <param name="config">The client configuration object</param>
+            <param name="user">The user needed for client operations. Must not be null.
+            If the user's Key is null, it will be assigned a key that uniquely identifies this device.</param>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.SetOffline(System.Boolean,System.TimeSpan)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.SetOfflineAsync(System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.BoolVariation(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.BoolVariationDetail(System.String,System.Boolean)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.StringVariation(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.StringVariationDetail(System.String,System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.FloatVariation(System.String,System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.FloatVariationDetail(System.String,System.Single)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.IntVariation(System.String,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.IntVariationDetail(System.String,System.Int32)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.JsonVariation(System.String,LaunchDarkly.Client.LdValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.JsonVariationDetail(System.String,LaunchDarkly.Client.LdValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.AllFlags">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.Track(System.String,LaunchDarkly.Client.LdValue,System.Double)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.Track(System.String,LaunchDarkly.Client.LdValue)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.Track(System.String)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.Flush">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.Identify(LaunchDarkly.Client.User,System.TimeSpan)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.IdentifyAsync(LaunchDarkly.Client.User)">
+            <inheritdoc/>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.LdClient.Dispose">
+            <summary>
+            Permanently shuts down the SDK client.
+            </summary>
+            <remarks>
+            <para>
+            This method closes all network collections, shuts down all background tasks, and releases any other
+            resources being held by the SDK.
+            </para>
+            <para>
+            If there are any pending analytics events, and if the SDK is online, it attempts to deliver the events
+            to LaunchDarkly before closing.
+            </para>
+            </remarks>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.NamespaceDoc">
+            <summary>
+            This is the main namespace for the LaunchDarkly Xamarin SDK. You will most often use <see cref="T:LaunchDarkly.Xamarin.LdClient"/>
+            (the SDK client) and <see cref="T:LaunchDarkly.Xamarin.Configuration"/> (configuration options for the client). The SDK also uses types
+            from <see cref="N:LaunchDarkly.Client"/>, such as <see cref="T:LaunchDarkly.Client.User"/>.
+            </summary>
+        </member>
+        <member name="T:LaunchDarkly.Xamarin.PlatformType">
+            <summary>
+            Values returned by <see cref="P:LaunchDarkly.Xamarin.LdClient.PlatformType"/>.
+            </summary>
+        </member>
+        <member name="F:LaunchDarkly.Xamarin.PlatformType.Standard">
+            <summary>
+            You are using the .NET Standard version of the SDK.
+            </summary>
+        </member>
+        <member name="F:LaunchDarkly.Xamarin.PlatformType.Android">
+            <summary>
+            You are using the Android version of the SDK.
+            </summary>
+        </member>
+        <member name="F:LaunchDarkly.Xamarin.PlatformType.IOs">
+            <summary>
+            You are using the iOS version of the SDK.
+            </summary>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.PlatformSpecific.Http.CreateHttpMessageHandler(System.TimeSpan,System.TimeSpan)">
+            <summary>
+            If our default configuration should use a specific <see cref="T:System.Net.Http.HttpMessageHandler"/>
+            implementation, returns that implementation.
+            </summary>
+            <remarks>
+            The timeouts are passed in because the Xamarin Android implementation does not actually
+            look at the configured timeouts from HttpClient.
+            </remarks>
+            <returns>an HTTP handler implementation or null</returns>
+        </member>
+        <member name="M:LaunchDarkly.Xamarin.PlatformSpecific.Http.TranslateHttpException(System.Exception)">
+            <summary>
+            Converts any platform-specific exceptions that might be thrown by the platform-specific
+            HTTP handler to their .NET equivalents.
+            </summary>
+            <remarks>
+            We don't really care about specific network exception classes in our code, but in any case
+            where we might expose the exception to application code, we want to normalize it to use only
+            .NET classes.
+            </remarks>
+            <param name="e">an exception</param>
+            <returns>the same exception or a more .NET-appropriate one</returns>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.PlatformSpecific.UserMetadata.DeviceName">
+            <summary>
+            Returns the string that should be passed in the "device" property for all users.
+            </summary>
+            <returns>The value for "device", or null if none.</returns>
+        </member>
+        <member name="P:LaunchDarkly.Xamarin.PlatformSpecific.UserMetadata.OSName">
+            <summary>
+            Returns the string that should be passed in the "os" property for all users.
+            </summary>
+            <returns>The value for "os", or null if none.</returns>
+        </member>
+        <member name="T:LaunchDarkly.Client.NamespaceDoc">
+            <summary>
+            This namespace contains types that are shared between the Xamarin and .NET SDKs, such as <see cref="T:LaunchDarkly.Client.User"/>.
+            </summary>
+        </member>
+    </members>
+</doc>
