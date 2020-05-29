@@ -1,6 +1,4 @@
 # Notes
-The default scene hosted by Michael Vittiglio uses the following Mobile Key: mob-e23cd11b-b158-4572-8932-50772294d932
-
 The scenes assume the following LaunchDarkly flags are in place:
 * cube-rotation-axis-2
   * Determines the rotation of the cubes.
@@ -13,15 +11,15 @@ The scenes assume the following LaunchDarkly flags are in place:
   * Determines if the "options" button in the main menu is visible.
   * Should return a boolean variation.
 
-The following custom user attributes impact the feature flags (using the previously mentioned LD project) as follows:
+The following custom user attributes are used in the scenes (using the previously mentioned LD project) as follows:
 * level-id
-  * A numeric value of 0 or 1 to indicate which scene is being occupied.
+  * A numeric value of 0 or 1 to indicate which scene is being used.
 * class-type
   * A string value with the following handled variations
     * Barbarian
     * Ninja
     * Wizard
-  * Will impact the cube-rotation-axis-2 flag's outcome.
+  * This is set using the "class" drop-down menu (top-right).
 
 Each scene has a LdClient prefab in each scene will need to have its Mobile Key and User Key values defined in order to connect to your LaunchDarkly project.
 
