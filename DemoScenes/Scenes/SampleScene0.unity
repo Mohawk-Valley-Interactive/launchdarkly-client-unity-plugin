@@ -1165,7 +1165,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 500
-  flagName: cube-rotation-axis-2
+  flagName: cube-rotation-axis
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1772,7 +1772,7 @@ MonoBehaviour:
     m_Options:
     - m_Text: Barbarian
       m_Image: {fileID: 0}
-    - m_Text: Ninja
+    - m_Text: Monk
       m_Image: {fileID: 0}
     - m_Text: Wizard
       m_Image: {fileID: 0}
@@ -2354,7 +2354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: -500
-  flagName: cube-rotation-axis-2
+  flagName: cube-rotation-axis
 --- !u!23 &1711073463
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2544,7 +2544,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 250
-  flagName: cube-rotation-axis-2
+  flagName: cube-rotation-axis
 --- !u!23 &1833699031
 MeshRenderer:
   m_ObjectHideFlags: 0

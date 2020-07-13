@@ -35,7 +35,7 @@ public class PlayerClassDropdownBehavior : MonoBehaviour
 		dropDown.ClearOptions();
 		List<Dropdown.OptionData> optionsList = new List<Dropdown.OptionData>(4);
 		optionsList.Add(new Dropdown.OptionData(PlayerAttributesBehavior.ClassType.Barbarian.ToString()));
-		optionsList.Add(new Dropdown.OptionData(PlayerAttributesBehavior.ClassType.Ninja.ToString()));
+		optionsList.Add(new Dropdown.OptionData(PlayerAttributesBehavior.ClassType.Monk.ToString()));
 		optionsList.Add(new Dropdown.OptionData(PlayerAttributesBehavior.ClassType.Wizard.ToString()));
 		optionsList.Add(new Dropdown.OptionData(PlayerAttributesBehavior.ClassType.Unset.ToString()));
 		dropDown.AddOptions(optionsList);
@@ -44,7 +44,7 @@ public class PlayerClassDropdownBehavior : MonoBehaviour
 			case PlayerAttributesBehavior.ClassType.Barbarian:
 				dropDown.value = 0;
 				break;
-			case PlayerAttributesBehavior.ClassType.Ninja:
+			case PlayerAttributesBehavior.ClassType.Monk:
 				dropDown.value = 1;
 				break;
 			case PlayerAttributesBehavior.ClassType.Wizard:
@@ -72,7 +72,7 @@ public class PlayerClassDropdownBehavior : MonoBehaviour
 					playerAttributesBehavior.ChangeAttribute(PlayerAttributesBehavior.ClassType.Barbarian);
 					break;
 				case 1:
-					playerAttributesBehavior.ChangeAttribute(PlayerAttributesBehavior.ClassType.Ninja);
+					playerAttributesBehavior.ChangeAttribute(PlayerAttributesBehavior.ClassType.Monk);
 					break;
 				case 2:
 					playerAttributesBehavior.ChangeAttribute(PlayerAttributesBehavior.ClassType.Wizard);

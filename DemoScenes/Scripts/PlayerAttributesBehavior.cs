@@ -11,14 +11,21 @@ public class PlayerAttributesBehavior : IUserAttributeProviderBehavior
     public enum ClassType
     {
         Barbarian,
-        Ninja,
+        Monk,
         Wizard,
         Unset
     }
 
     public override void InjectAttributes(ref IUserBuilder userBuilder)
     {
-        userBuilder.Custom("class-type", classType.ToString());
+        if(classType != ClassType.Unset)
+		{
+            userBuilder.Custom("class-type", classType.ToString());
+		} 
+        else
+		{
+            userBuilder.Custom("class-type", "");
+		}
     }
 
     public void ChangeAttribute(ClassType ct)

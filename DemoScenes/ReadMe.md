@@ -1,6 +1,6 @@
 # Notes
 The scenes assume the following LaunchDarkly flags are in place:
-* cube-rotation-axis-2
+* cube-rotation-axis
   * Determines the rotation of the cubes.
   * Should be a JSON object with the following format: {'x': 1.0, 'y': 0.0, 'z': 0.0}
   * A zero vector will result in no rotation.
@@ -17,7 +17,7 @@ The following custom user attributes are used in the scenes (using the previousl
 * class-type
   * A string value with the following handled variations
     * Barbarian
-    * Ninja
+    * Monk
     * Wizard
   * This is set using the "class" drop-down menu (top-right).
 

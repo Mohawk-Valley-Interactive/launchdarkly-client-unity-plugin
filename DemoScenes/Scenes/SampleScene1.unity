@@ -1008,7 +1008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: -250
-  flagName: cube-rotation-axis-2
+  flagName: cube-rotation-axis
 --- !u!1 &956133346
 GameObject:
   m_ObjectHideFlags: 0
@@ -2356,7 +2356,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 500
-  flagName: cube-rotation-axis-2
+  flagName: cube-rotation-axis
 --- !u!23 &1711073463
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2659,7 +2659,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 100
-  flagName: cube-rotation-axis-2
+  flagName: cube-rotation-axis
 --- !u!23 &1833699031
 MeshRenderer:
   m_ObjectHideFlags: 0
