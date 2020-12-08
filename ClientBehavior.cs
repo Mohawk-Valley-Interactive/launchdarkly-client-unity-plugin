@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using LaunchDarkly.Client;
 using LaunchDarkly.Xamarin;
@@ -73,7 +73,7 @@ namespace LaunchDarkly.Unity
 			}
 
 			Configuration ldConfiguration = Configuration.Builder(mobileKey).Build();
-			InitializeUserBuilder();
+			RefreshUserAttributes();
 			User ldUser = userBuilder.Build();
 			ldClient = LdClient.Init(ldConfiguration, ldUser, System.TimeSpan.FromMilliseconds(connectionTimeoutMS));
 			hasAttributesPending = false;
@@ -168,6 +168,19 @@ namespace LaunchDarkly.Unity
 			}
 		}
 
+		public void RefreshUserAttributes()
+		{
+			userBuilder = User.Builder(userKey);
+			userBuilder.Anonymous(isUserAnonymous);
+
+			foreach (IUserAttributeProviderBehavior attributeProvider in GameObject.FindObjectsOfType<IUserAttributeProviderBehavior>())
+			{
+				attributeProvider.InjectAttributes(ref userBuilder);
+			}
+
+			hasAttributesPending = true;
+		}
+
 		public void UpdateUser(IUserAttributeProviderBehavior attributeProvider)
 		{
 			attributeProvider.InjectAttributes(ref userBuilder);
@@ -209,18 +222,6 @@ namespace LaunchDarkly.Unity
 
 		private Dictionary<string, List<CallbackInfo>> flagCallbacks = new Dictionary<string, List<CallbackInfo>>();
 
-		private void InitializeUserBuilder()
-		{
-			userBuilder = User.Builder(userKey);
-			userBuilder.Anonymous(isUserAnonymous);
-
-			foreach (IUserAttributeProviderBehavior attributeProvider in GameObject.FindObjectsOfType<IUserAttributeProviderBehavior>())
-			{
-				attributeProvider.InjectAttributes(ref userBuilder);
-			}
-
-			hasAttributesPending = true;
-		}
 		private void ExecuteVariationCheck(string flagName, Action<LdValue> callback, ref LdValue valueDefault)
 		{
 			LdValue flagValue = LdValue.Null;
@@ -266,8 +267,9 @@ namespace LaunchDarkly.Unity
 				lastLoadedSceneIndex = scene.buildIndex;
 				if(IsInitialized && reloadAttributesOnSceneChange)
 				{
-					InitializeUserBuilder();
+					RefreshUserAttributes();
 					IdentifyUser();
+					flagCallbacks.Clear();
 				}
 
 			}
