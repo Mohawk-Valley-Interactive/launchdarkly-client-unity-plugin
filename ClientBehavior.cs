@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using LaunchDarkly.Client;
 using LaunchDarkly.Xamarin;
@@ -194,6 +194,106 @@ namespace LaunchDarkly.Unity
 				ldClient.Identify(userBuilder.Build(), System.TimeSpan.FromMilliseconds(connectionTimeoutMS));
 				hasAttributesPending = false;
 			}
+		}
+
+		public bool BoolVariation(string flagName, bool defaultValue = false)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.BoolVariation(flagName, defaultValue);
+			}
+
+			return defaultValue;
+		}
+
+		public EvaluationDetail<bool> BoolVariationDetail(string flagName, bool defaultValue = false)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.BoolVariationDetail(flagName, defaultValue);
+			}
+
+			return null;
+		}
+
+		public int IntVariation(string flagName, int defaultValue = 0)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.IntVariation(flagName, defaultValue);
+			}
+
+			return defaultValue;
+		}
+
+		public EvaluationDetail<int> IntVariationDetail(string flagName, int defaultValue = 0)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.IntVariationDetail(flagName, defaultValue);
+			}
+
+			return null;
+		}
+
+		public float FloatVariation(string flagName, float defaultValue = 0.0f)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.FloatVariation(flagName, defaultValue);
+			}
+
+			return defaultValue;
+		}
+
+		public EvaluationDetail<float> FloatVariationDetail(string flagName, float defaultValue = 0.0f)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.FloatVariationDetail(flagName, defaultValue);
+			}
+
+			return null;
+		}
+
+		public LdValue JsonVariation(string flagName, LdValue defaultValue)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.JsonVariation(flagName, defaultValue);
+			}
+
+			return defaultValue;
+		}
+
+		public EvaluationDetail<LdValue> StringVariationDetail(string flagName, LdValue defaultValue)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.JsonVariationDetail(flagName, defaultValue);
+			}
+
+			return null;
+		}
+
+		public string StringVariation(string flagName, string defaultValue)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.StringVariation(flagName, defaultValue);
+			}
+
+			return defaultValue;
+		}
+
+		public EvaluationDetail<string> StringVariationDetail(string flagName, string defaultValue)
+		{
+			if(ldClient != null && ldClient.Initialized)
+			{
+				return ldClient.StringVariationDetail(flagName, defaultValue);
+			}
+
+			return null;
 		}
 
 		private static LdClient ldClient;
