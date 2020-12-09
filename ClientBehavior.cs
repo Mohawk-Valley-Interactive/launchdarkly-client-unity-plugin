@@ -56,6 +56,7 @@ namespace LaunchDarkly.Unity
 			if (automaticallyIdentifyWhenAttributesPending && hasAttributesPending)
 			{
 				IdentifyUser();
+				ManuallyCallCallbacks();
 			}
 		}
 
@@ -80,28 +81,16 @@ namespace LaunchDarkly.Unity
 
 			ldClient.FlagChanged += OnFlagChanged;
 
-			if(flagCallbacks.Count > 0)
-			{
-				foreach(string key in flagCallbacks.Keys)
-				{
-					foreach (CallbackInfo callback in flagCallbacks[key])
-					{
-						if(callback.checkAsap)
-						{
-							ExecuteVariationCheck(key, callback.callback, ref callback.defaultValue);
-						}
-					}
-				}
-			}
+			ManuallyCallCallbacks();
 
 			return ldClient.Initialized;
 		}
 
 		public void TrackMetric(string eventName)
 		{
-			if(IsInitialized)
+			if (IsInitialized)
 			{
-				ldClient.Track(eventName);	
+				ldClient.Track(eventName);
 			}
 			else
 			{
@@ -111,9 +100,9 @@ namespace LaunchDarkly.Unity
 
 		public void TrackMetric(string eventName, LdValue ldValue)
 		{
-			if(IsInitialized)
+			if (IsInitialized)
 			{
-				ldClient.Track(eventName, ldValue);	
+				ldClient.Track(eventName, ldValue);
 			}
 			else
 			{
@@ -123,9 +112,9 @@ namespace LaunchDarkly.Unity
 
 		public void TrackMetric(string eventName, LdValue ldValue, double metricValue)
 		{
-			if(IsInitialized)
+			if (IsInitialized)
 			{
-				ldClient.Track(eventName, ldValue, metricValue);	
+				ldClient.Track(eventName, ldValue, metricValue);
 			}
 			else
 			{
@@ -198,7 +187,7 @@ namespace LaunchDarkly.Unity
 
 		public bool BoolVariation(string flagName, bool defaultValue = false)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.BoolVariation(flagName, defaultValue);
 			}
@@ -208,7 +197,7 @@ namespace LaunchDarkly.Unity
 
 		public EvaluationDetail<bool> BoolVariationDetail(string flagName, bool defaultValue = false)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.BoolVariationDetail(flagName, defaultValue);
 			}
@@ -218,7 +207,7 @@ namespace LaunchDarkly.Unity
 
 		public int IntVariation(string flagName, int defaultValue = 0)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.IntVariation(flagName, defaultValue);
 			}
@@ -228,7 +217,7 @@ namespace LaunchDarkly.Unity
 
 		public EvaluationDetail<int> IntVariationDetail(string flagName, int defaultValue = 0)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.IntVariationDetail(flagName, defaultValue);
 			}
@@ -238,7 +227,7 @@ namespace LaunchDarkly.Unity
 
 		public float FloatVariation(string flagName, float defaultValue = 0.0f)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.FloatVariation(flagName, defaultValue);
 			}
@@ -248,7 +237,7 @@ namespace LaunchDarkly.Unity
 
 		public EvaluationDetail<float> FloatVariationDetail(string flagName, float defaultValue = 0.0f)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.FloatVariationDetail(flagName, defaultValue);
 			}
@@ -258,7 +247,7 @@ namespace LaunchDarkly.Unity
 
 		public LdValue JsonVariation(string flagName, LdValue defaultValue)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.JsonVariation(flagName, defaultValue);
 			}
@@ -268,7 +257,7 @@ namespace LaunchDarkly.Unity
 
 		public EvaluationDetail<LdValue> StringVariationDetail(string flagName, LdValue defaultValue)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.JsonVariationDetail(flagName, defaultValue);
 			}
@@ -278,7 +267,7 @@ namespace LaunchDarkly.Unity
 
 		public string StringVariation(string flagName, string defaultValue)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.StringVariation(flagName, defaultValue);
 			}
@@ -288,7 +277,7 @@ namespace LaunchDarkly.Unity
 
 		public EvaluationDetail<string> StringVariationDetail(string flagName, string defaultValue)
 		{
-			if(ldClient != null && ldClient.Initialized)
+			if (ldClient != null && ldClient.Initialized)
 			{
 				return ldClient.StringVariationDetail(flagName, defaultValue);
 			}
@@ -322,6 +311,47 @@ namespace LaunchDarkly.Unity
 
 		private Dictionary<string, List<CallbackInfo>> flagCallbacks = new Dictionary<string, List<CallbackInfo>>();
 
+		private void ClearInvalidCallbacks()
+		{
+			List<CallbackInfo> removableCallbacks = new List<CallbackInfo>();
+			foreach (string key in flagCallbacks.Keys)
+			{
+				List<CallbackInfo> callbackInfoList = flagCallbacks[key];
+				foreach (CallbackInfo callbackInfo in callbackInfoList)
+				{
+					string target = callbackInfo.callback.Target.ToString();
+					if (target == "null")
+					{
+						removableCallbacks.Add(callbackInfo);
+					}
+				}
+
+				foreach (CallbackInfo removableCallback in removableCallbacks)
+				{
+					callbackInfoList.Remove(removableCallback);
+				}
+
+				removableCallbacks.Clear();
+			}
+		}
+
+		private void ManuallyCallCallbacks()
+		{
+			if (flagCallbacks.Count > 0)
+			{
+				foreach (string key in flagCallbacks.Keys)
+				{
+					foreach (CallbackInfo callback in flagCallbacks[key])
+					{
+						if (callback.checkAsap)
+						{
+							ExecuteVariationCheck(key, callback.callback, ref callback.defaultValue);
+						}
+					}
+				}
+			}
+		}
+
 		private void ExecuteVariationCheck(string flagName, Action<LdValue> callback, ref LdValue valueDefault)
 		{
 			LdValue flagValue = LdValue.Null;
@@ -350,7 +380,6 @@ namespace LaunchDarkly.Unity
 
 		private void OnFlagChanged(object sender, FlagChangedEventArgs e)
 		{
-
 			if (flagCallbacks.ContainsKey(e.Key))
 			{
 				foreach (CallbackInfo callbackInfo in flagCallbacks[e.Key])
@@ -362,19 +391,17 @@ namespace LaunchDarkly.Unity
 
 		private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
 		{
-			if(scene.buildIndex != lastLoadedSceneIndex)
+			if (scene.buildIndex != lastLoadedSceneIndex)
 			{
 				lastLoadedSceneIndex = scene.buildIndex;
-				if(IsInitialized && reloadAttributesOnSceneChange)
+				if (IsInitialized && reloadAttributesOnSceneChange)
 				{
 					RefreshUserAttributes();
 					IdentifyUser();
-					flagCallbacks.Clear();
+					ClearInvalidCallbacks();
 				}
-
 			}
 		}
-
 	}
 }
 
