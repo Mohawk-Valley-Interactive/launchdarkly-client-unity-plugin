@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExitButtonBehavior : MonoBehaviour
+public class LDPluginDemoExitButtonBehavior : MonoBehaviour
 {
 	public void OnClick()
 	{

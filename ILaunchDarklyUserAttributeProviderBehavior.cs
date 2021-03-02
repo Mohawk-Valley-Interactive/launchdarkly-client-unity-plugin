@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LaunchDarkly.Unity
 {
-	public abstract class IUserAttributeProviderBehavior : MonoBehaviour
+	public abstract class ILaunchDarklyUserAttributeProviderBehavior : MonoBehaviour
 	{
 		[Serializable]
 		public class StringAttribute

@@ -4,7 +4,7 @@ using System;
 
 namespace LaunchDarkly.Unity
 {
-public class LoggerFactoryAdapter : AbstractCachingLoggerFactoryAdapter
+public class LaunchDarklyLoggerFactoryAdapter : AbstractCachingLoggerFactoryAdapter
 {
 	public class Logger : AbstractLogger
 	{
@@ -62,7 +62,7 @@ public class LoggerFactoryAdapter : AbstractCachingLoggerFactoryAdapter
 
 	private readonly LogLevel _useLogLevel;
 
-	public LoggerFactoryAdapter(LogLevel useLogLevel) : base(false)
+	public LaunchDarklyLoggerFactoryAdapter(LogLevel useLogLevel) : base(false)
 	{
 		_useLogLevel = useLogLevel;
 	}

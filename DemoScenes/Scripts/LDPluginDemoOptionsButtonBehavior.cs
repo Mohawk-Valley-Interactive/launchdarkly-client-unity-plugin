@@ -2,7 +2,7 @@
 using LaunchDarkly.Unity;
 using UnityEngine;
 
-public class OptionsButtonBehavior : MonoBehaviour
+public class LDPluginDemoOptionsButtonBehavior : MonoBehaviour
 {
     public string showOptionsFeatureFlagName = "show-options-menu";
     public GameObject optionsButton;
@@ -12,7 +12,7 @@ public class OptionsButtonBehavior : MonoBehaviour
     {
         if(optionsButton == null)
         {
-            Debug.LogWarning("OptionsButtonBehavior.Awake() optionsButton not assigned.");
+            Debug.LogWarning("LDPluginDemoOptionsButtonBehavior.Awake() optionsButton not assigned.");
             return;
         }
 
@@ -22,7 +22,7 @@ public class OptionsButtonBehavior : MonoBehaviour
     void Start()
     {
         LaunchDarkly.Client.LdValue flagValueDefault = LaunchDarkly.Client.LdValue.Of(showOptionsFeatureFlagDefault);
-        ClientBehavior.Instance.RegisterFeatureFlagChangedCallback(showOptionsFeatureFlagName, flagValueDefault, flagValueCallback, true);  
+        LaunchDarklyClientBehavior.Instance.RegisterFeatureFlagChangedCallback(showOptionsFeatureFlagName, flagValueDefault, flagValueCallback, true);  
     }
 
     private void Update()

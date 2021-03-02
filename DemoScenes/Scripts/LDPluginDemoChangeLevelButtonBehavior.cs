@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ChangeLevelButtonBehavior : MonoBehaviour
+public class LDPluginDemoChangeLevelButtonBehavior : MonoBehaviour
 {
 	public string targetSceneName;
 	public void OnClick()
@@ -12,7 +12,7 @@ public class ChangeLevelButtonBehavior : MonoBehaviour
 		}
 		else
 		{
-			Debug.LogWarning("ChangeLevelButtonBehavior.OnClick() - targetSceneName not initialized.");
+			Debug.LogWarning("LDPluginDemoChangeLevelButtonBehavior.OnClick() - targetSceneName not initialized.");
 		}
 	}
 }

@@ -2,7 +2,7 @@
 using LaunchDarkly.Unity;
 using UnityEngine.SceneManagement;
 
-public class CurrentLevelAttributesBehavior : IUserAttributeProviderBehavior
+public class LDPluginDemoCurrentLevelAttributesBehavior : ILaunchDarklyUserAttributeProviderBehavior
 {
     public string levelName = "unset";
     public override void InjectAttributes(ref IUserBuilder userBuilder)

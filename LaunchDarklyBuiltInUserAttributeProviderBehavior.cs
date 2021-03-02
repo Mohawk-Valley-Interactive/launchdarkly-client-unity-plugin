@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace LaunchDarkly.Unity
 {
-	public class BuiltInUserAttributeProviderBehavior : IUserAttributeProviderBehavior
+	public class LaunchDarklyBuiltInUserAttributeProviderBehavior : ILaunchDarklyUserAttributeProviderBehavior
 	{
 		[SerializeField]
 		public StringAttribute email = null;

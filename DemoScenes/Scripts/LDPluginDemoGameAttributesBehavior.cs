@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class GameAttributesBehavior : MonoBehaviour
+public class LDPluginDemoGameAttributesBehavior : MonoBehaviour
 {
-	public static GameAttributesBehavior Instance;
+	public static LDPluginDemoGameAttributesBehavior Instance;
 
 	// Start is called before the first frame update
 	void Awake()
@@ -14,7 +14,7 @@ public class GameAttributesBehavior : MonoBehaviour
 		}
 		else
 		{
-			Debug.LogWarning("GameAttributesBehavior.Awake() Instance attempted creation multiple times; was prevented.");
+			Debug.LogWarning("LDPluginDemoGameAttributesBehavior.Awake() Instance attempted creation multiple times; was prevented.");
 			Destroy(gameObject);
 			return;
 		}

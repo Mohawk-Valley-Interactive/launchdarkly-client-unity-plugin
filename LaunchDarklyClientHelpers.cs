@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace LaunchDarkly.Unity
 {
-	public class ClientHelpers
+	public class LaunchDarklyClientHelpers
 	{
 		public static Vector3 LdValueToVector3(LdValue ldVector3)
 		{

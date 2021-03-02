@@ -3,7 +3,7 @@ using LaunchDarkly.Client;
 using LaunchDarkly.Unity;
 using UnityEngine;
 
-public class PlayerAttributesBehavior : IUserAttributeProviderBehavior
+public class LDPluginDemoPlayerAttributesBehavior : ILaunchDarklyUserAttributeProviderBehavior
 {
     public ClassType classType;
 
@@ -33,10 +33,10 @@ public class PlayerAttributesBehavior : IUserAttributeProviderBehavior
         if(classType != ct)
         {
             classType = ct;
-            if(ClientBehavior.IsInitialized)
+            if(LaunchDarklyClientBehavior.IsInitialized)
             {
                 Debug.Log("Changing user state.");
-                ClientBehavior.Instance.UpdateUser(this);
+                LaunchDarklyClientBehavior.Instance.UpdateUser(this);
             }
         } 
     }

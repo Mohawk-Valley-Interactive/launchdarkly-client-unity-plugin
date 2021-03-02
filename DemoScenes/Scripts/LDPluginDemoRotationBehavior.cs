@@ -2,19 +2,19 @@
 using LaunchDarkly.Unity;
 using UnityEngine;
 
-public class RotationBehavior : MonoBehaviour
+public class LDPluginDemoRotationBehavior : MonoBehaviour
 {
 	public float speed = 1.0f;
 	public string flagName = "cube-rotation-axis-2";
 
 	void Start()
 	{
-		ClientBehavior.Instance.RegisterFeatureFlagChangedCallback(flagName, ClientHelpers.Vector3ToLdValue(flagDefault), onFeatureFlagChanged, true);
+		LaunchDarklyClientBehavior.Instance.RegisterFeatureFlagChangedCallback(flagName, LaunchDarklyClientHelpers.Vector3ToLdValue(flagDefault), onFeatureFlagChanged, true);
 	}
 
 	private void onFeatureFlagChanged(LdValue flagValue)
 	{
-		rotationAxis = ClientHelpers.LdValueToVector3(flagValue);
+		rotationAxis = LaunchDarklyClientHelpers.LdValueToVector3(flagValue);
 	}
 
 	void Update()

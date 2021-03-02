@@ -7,9 +7,9 @@ using UnityEngine.SceneManagement;
 
 namespace LaunchDarkly.Unity
 {
-	public class ClientBehavior : MonoBehaviour
+	public class LaunchDarklyClientBehavior : MonoBehaviour
 	{
-		public static ClientBehavior Instance;
+		public static LaunchDarklyClientBehavior Instance;
 
 		public static bool IsInitialized
 		{
@@ -94,7 +94,7 @@ namespace LaunchDarkly.Unity
 			}
 			else
 			{
-				Debug.LogWarning("LaunchDarkly ClientBehavior.TrackMetric(string): Client not initialized, metric not tracked");
+				Debug.LogWarning("LaunchDarkly LaunchDarklyClientBehavior.TrackMetric(string): Client not initialized, metric not tracked");
 			}
 		}
 
@@ -106,7 +106,7 @@ namespace LaunchDarkly.Unity
 			}
 			else
 			{
-				Debug.LogWarning("LaunchDarkly ClientBehavior.TrackMetric(string, LdValue): Client not initialized, metric not tracked");
+				Debug.LogWarning("LaunchDarkly LaunchDarklyClientBehavior.TrackMetric(string, LdValue): Client not initialized, metric not tracked");
 			}
 		}
 
@@ -118,7 +118,7 @@ namespace LaunchDarkly.Unity
 			}
 			else
 			{
-				Debug.LogWarning("LaunchDarkly ClientBehavior.TrackMetric(string, LdValue, double): Client not initialized, metric not tracked");
+				Debug.LogWarning("LaunchDarkly LaunchDarklyClientBehavior.TrackMetric(string, LdValue, double): Client not initialized, metric not tracked");
 			}
 		}
 
@@ -162,7 +162,7 @@ namespace LaunchDarkly.Unity
 			userBuilder = User.Builder(userKey);
 			userBuilder.Anonymous(isUserAnonymous);
 
-			foreach (IUserAttributeProviderBehavior attributeProvider in GameObject.FindObjectsOfType<IUserAttributeProviderBehavior>())
+			foreach (ILaunchDarklyUserAttributeProviderBehavior attributeProvider in GameObject.FindObjectsOfType<ILaunchDarklyUserAttributeProviderBehavior>())
 			{
 				attributeProvider.InjectAttributes(ref userBuilder);
 			}
@@ -170,7 +170,7 @@ namespace LaunchDarkly.Unity
 			hasAttributesPending = true;
 		}
 
-		public void UpdateUser(IUserAttributeProviderBehavior attributeProvider)
+		public void UpdateUser(ILaunchDarklyUserAttributeProviderBehavior attributeProvider)
 		{
 			attributeProvider.InjectAttributes(ref userBuilder);
 			hasAttributesPending = true;

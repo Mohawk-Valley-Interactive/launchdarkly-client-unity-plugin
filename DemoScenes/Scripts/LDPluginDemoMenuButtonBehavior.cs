@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MenuButtonBehavior : MonoBehaviour
+public class LDPluginDemoMenuButtonBehavior : MonoBehaviour
 {
     public GameObject thisUiElement;
     public GameObject otherUiElement;

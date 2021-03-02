@@ -3,13 +3,13 @@ using UnityEngine;
 
 namespace LaunchDarkly.Unity
 {
-	public class LoggerBehavior : MonoBehaviour
+	public class LaunchDarklyLoggerBehavior : MonoBehaviour
 	{
 		public LogLevel logLevel = LogLevel.Info;
 
 		public void Awake()
 		{
-			LogManager.Adapter = new LoggerFactoryAdapter(logLevel);
+			LogManager.Adapter = new LaunchDarklyLoggerFactoryAdapter(logLevel);
 		}
 
 		public ILoggerFactoryAdapter GetLoggerFactoryAdapter()
